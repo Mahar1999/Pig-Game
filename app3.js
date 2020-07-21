@@ -18,18 +18,23 @@ document.querySelector('.btn-roll').addEventListener('click', function () {   //
     if (gamePlaying) {
 
         //1.Random Number
-        var dice = Math.floor(Math.random() * 6) + 1;
+        var dice1 = Math.floor(Math.random() * 6) + 1;
+        var dice2 = Math.floor(Math.random() * 6) + 1;
 
         //2.Display Result
-        var diceDOM = document.querySelector('.dice');
-        diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-' + dice + '.png';
+        var diceDOM1 = document.getElementById('dice-1');
+        diceDOM1.style.display = 'block';
+        diceDOM1.src = 'dice-' + dice1 + '.png';
+
+        var diceDOM2 = document.getElementById('dice-2');
+        diceDOM2.style.display = 'block';
+        diceDOM2.src = 'dice-' + dice2 + '.png';
 
         //3.Update Score if it isnt 1
 
-        if (dice !== 1) {
+        if (dice1 !== 1 & dice2 !== 1) {
             //Add score
-            roundScores += dice;
+            roundScores += (dice1 + dice2);
             //here first we update the RS and then put them in the current class
             document.querySelector('#current-' + activePlayer).textContent = roundScores;
         }
@@ -51,9 +56,23 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
         // check whether the player won the game
-        if (scores[activePlayer] >= 50) {
+
+        var input = document.querySelector('.Final-Score').value;
+        var winningScore;
+        // undefiend , 0 , null or " " are coerced to false
+        //anything else is coerced to true
+        if (input) {
+            winningScore = input;
+        }
+        else {
+            winningScore = 100;
+        }
+
+        // check whether the player won the game
+        if (scores[activePlayer] >= winningScore) {
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
-            document.querySelector('.dice').style.display = 'none';
+            document.getElementById('dice-1').style.display = 'none';
+            document.getElementById('dice-2').style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove = 'active';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add = 'winner';
 
@@ -85,7 +104,8 @@ function nextPlayer() {
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
 
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
 
 }
 
@@ -98,7 +118,8 @@ function init() {
     activePlayer = 0;
     gamePlaying = true;
 
-    document.querySelector('.dice').style.display = "none";
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
     // getids are faster than querySelector
     document.getElementById('score-0').textContent = '0';
     document.getElementById('current-0').textContent = '0';
@@ -108,13 +129,13 @@ function init() {
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
 
-    document.querySelector('.player-0-panel').classList.remove('winner');
-    document.querySelector('.player-1-panel').classList.remove('winner');
-    document.querySelector('.player-0-panel').classList.remove('active');
-    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.remove = 'winner';
+    document.querySelector('.player-1-panel').classList.remove = 'winner';
+    document.querySelector('.player-0-panel').classList.remove = 'active';
+    document.querySelector('.player-1-panel').classList.remove = 'active';
 
 
-    document.querySelector('.player-0-panel').classList.add('active');
+    document.querySelector('.player-0-panel').classList.add = 'active';
     // console.log('clicked')
 
 

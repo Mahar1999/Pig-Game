@@ -7,9 +7,14 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
+challenge 1- when a player rolls 6 twice consecutively he losses his turn
+
 */
 
 var scores, roundScores, activePlayer, gamePlaying, oldDice, newDice;
+// for challenge one
+var i;
+var diceArray = [];
 
 init();
 
@@ -25,6 +30,15 @@ document.querySelector('.btn-roll').addEventListener('click', function () {   //
         diceDOM.style.display = 'block';
         diceDOM.src = 'dice-' + dice + '.png';
 
+        // challenge 1.
+
+        diceArray.push = 'dice';
+
+        if (diceArray[i] == 6 && diceArray[i + 1] == 6 && diceArray.length >= 2) {
+            nextPlayer();
+        }
+
+
         //3.Update Score if it isnt 1
 
         if (dice !== 1) {
@@ -36,8 +50,10 @@ document.querySelector('.btn-roll').addEventListener('click', function () {   //
         else {
 
             nextPlayer();
+
         }
     }
+
 });
 
 document.querySelector('.btn-hold').addEventListener('click', function () {
@@ -46,6 +62,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
         //Add a current score to a global score
         scores[activePlayer] += roundScores;
+
 
         //Update the UI
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
@@ -66,6 +83,8 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
             nextPlayer();
 
         }
+
+
     }
 });
 
@@ -86,10 +105,16 @@ function nextPlayer() {
     document.querySelector('.player-1-panel').classList.toggle('active');
 
     document.querySelector('.dice').style.display = 'none';
+    diceArray = [];
+
 
 }
 
+
 document.querySelector('.btn-new').addEventListener('click', init);
+
+
+
 
 function init() {
 
@@ -119,6 +144,11 @@ function init() {
 
 
 }
+
+
+
+
+
 
 // document.querySelector('#current-' + activePlayer).textContent = dice;
 
